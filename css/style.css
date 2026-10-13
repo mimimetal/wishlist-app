@@ -1,168 +1,218 @@
-﻿*,
+﻿/* ==========================================
+   1. Глобальний скид (Reset) та Box Model
+   ========================================== */
+*,
 *::before,
 *::after {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-
-
-body{
-    margin: 0;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    line-height: 1.5;
-    color: #332d2b;
-    background-color: #faf6f0;
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.5;
+  color: #332d2b;
+  background-color: #faf6f0;
 }
 
-
-
-header {
-    background-color: #e8a598;
-    color: #ffffff;
-    padding: 24px;
-    text-align: center;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+img {
+  max-width: 100%;
+  height: auto;
 }
 
-header h1 {
-    margin: 1;
-    font-size: 2.2rem;
-    font-weight: 700;
+/* ==========================================
+   2. Шапка та Підвал
+   ========================================== */
+.site-header {
+  background-color: #e8a598;
+  color: #ffffff;
+  padding: 24px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.site-header h1 {
+  margin: 0;
+  font-size: 2.2rem;
+  font-weight: 700;
+}
+
+.site-footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 0.85rem;
+  color: #887b75;
+  background-color: #eee5de;
+}
+
+/* ==========================================
+   3. Базовий (Мобільний) Макет — Mobile First (<600px)
+   ========================================== */
+.app-layout {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 main {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 section {
-    margin-bottom: 32px;
-    background-color:#ffffff;
-    padding: 20px;
-    border-radius: 12px;
-    border: 1px solid #ebdcd5;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #ebdcd5;
 }
 
 section h2 {
-    margin-top: 0;
-    color: #c86d5e;
-    font-size: 1.5rem;
-    border-bottom: 2px solid #faf6f0;
-    padding-bottom: 8px
+  margin-top: 0;
+  color: #c86d5e;
+  font-size: 1.5rem;
+  border-bottom: 2px solid #faf6f0;
+  padding-bottom: 8px;
 }
 
-
-
-form div {
-    margin-bottom: 14px;
+/* Форма додавання */
+.form-group {
+  margin-bottom: 14px;
 }
 
 label {
-    display: block;
-    margin-bottom: 6px;
-    font-weight: 600;
-    font-size: 0.95rem;
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: 0.95rem;
 }
 
 input[type="text"],
 input[type="number"],
 select {
-    width: 100%;
-    padding: 10px 12px;
-    font-size: 1rem;
-    border: 1px solid #dcd0ca;
-    border-radius: 6px;
-    background-color: #fffdfb;
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 1rem;
+  border: 1px solid #dcd0ca;
+  border-radius: 6px;
+  background-color: #fffdfb;
 }
 
 input:focus,
 select:focus {
-    outline: none;
-    border-color: #e8a598;
-    box-shadow: 0 0 0 3px rgba(232, 165, 152, 0.25);
+  outline: none;
+  border-color: #e8a598;
+  box-shadow: 0 0 0 3px rgba(232, 165, 152, 0.25);
 }
 
-button {
-    background-color: #c86d5e;
-    color:#ffffff;
-    padding: 10px 20px;
-    font-size: 1rem;
-    font-weight: 600;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.2s ease; 
+.btn-submit {
+  width: 100%;
+  background-color: #c86d5e;
+  color: #ffffff;
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
-button:hover {
-    background-color: #b35b4c;
+.btn-submit:hover {
+  background-color: #b35b4c;
 }
 
-
-
-
-
-article {
-    padding: 14px 18px;
-    border: 1 px solid #ebdcd5;
-    border-radius: 10px;
-    margin-bottom: 12px;
-    background-color:#fffdfb;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+/* Мобільна сітка карток — 1 колонка */
+.wishlist-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
 }
 
-article:hover {
-    transform: translatey(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+.wish-card {
+  padding: 16px;
+  border: 1px solid #ebdcd5;
+  border-radius: 10px;
+  background-color: #fffdfb;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-article h3 {
-    margin: 0 0 6px 0;
-    color: #332d2b;
-    font-size: 1.2rem;
+.wish-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-article p {
-    margin: 4px 0;
-    color: #665c58;
+.wish-card h3 {
+  margin: 0 0 8px 0;
+  color: #332d2b;
+  font-size: 1.15rem;
 }
 
-/* модифікатор "куплено" для майбутнього */
-article.purchased h3 {
-    text-decoration: line-through;
-    opacity: 0.6;
+.wish-card p {
+  margin: 4px 0;
+  color: #665c58;
 }
 
-
-aside {
-    max-width: 800px;
-    margin: 0 auto 32px auto;
-    padding: 20px;
-    background-color: #f7ebe6;
-    border: 1px solid #ebdcd5;
-    border-radius: 12px;
-    text-align: center;
+/* Мобільний aside */
+.summary-aside {
+  background-color: #f7ebe6;
+  border: 1px solid #ebdcd5;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
 }
 
-aside h2 {
-    margin-top: 0;
-    color: #c86d5e;
-    font-size: 1.3rem;
+.summary-aside h2 {
+  margin-top: 0;
+  color: #c86d5e;
+  font-size: 1.3rem;
 }
 
-aside strong {
-    font-size: 1.8rem;
-    color: #c86d5e;
-    display: block;
-    margin-top: 6px;
+.summary-aside strong {
+  font-size: 1.8rem;
+  color: #c86d5e;
+  display: block;
+  margin-top: 6px;
 }
 
+/* ==========================================
+   4. Планшетний макет (Breakpoint ≥ 600px)
+   ========================================== */
+@media (min-width: 600px) {
+  /* Картки бажань переходяться у 2 колонки */
+  .wishlist-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
-footer {
-    text-align: center;
-    padding: 20px;
-    font-size: 0.85rem;
-    color: #887b75;
-    background-color: #eee5de;
+  .btn-submit {
+    width: auto; /* Кнопка повертає природний розмір */
+  }
+}
+
+/* ==========================================
+   5. Десктопний макет (Breakpoint ≥ 1024px)
+   ========================================== */
+@media (min-width: 1024px) {
+  /* Картки бажань стають у 3 колонки */
+  .wishlist-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* main та aside стають поруч у співвідношенні 3fr 1fr */
+  .app-layout {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    align-items: start;
+    gap: 24px;
+    padding: 32px 16px;
+  }
+
+  /* Зафіксуємо aside, щоб він під час прокрутки плавав поруч */
+  .summary-aside {
+    position: sticky;
+    top: 24px;
+  }
 }

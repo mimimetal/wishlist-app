@@ -1,78 +1,88 @@
 <!DOCTYPE html>
 <html lang="uk">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Список бажань</title>
-        <link rel="stylesheet" href="css/style.css">
-    </head>
-    <body>
-        <!-- Шапка з назвою -->
-         <header>
-            <h1>Список бажань</h1>
-         </header>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список бажань</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
 
-    <!-- Основна частина сторінки -->
-<main>
-     
-      <section>
-        <h2>Додати бажання</h2>
-        <form action="#" method="post">
-            <div>
-                <label for="wish-title">Назва бажання</label>
-                <input type="text" id="wish-title" name="title" required placeholder="Наприклад: Навушники">
-            </div>
-            <div>
-                <label for="wish-price">Ціна (грн)</label>
-                <input type="number" id="wish-price" name="price" reqired palceholder="1500">
-            </div>
-            <div>
-                <label for="wish-priority">Пріоритет:</label>
-                <select id="wish-priority" name="priority">
-                    <option value="high">Високий</option>
-                    <optin value="medium" selected>Середній</optin>
-                    <option value="Low">Низький</option>
-                </select>
-            </div>
-            <button type="submit">Додати у список</button>
-        </form>
-        </section>
+    <!-- Шапка з назвою -->
+    <header class="site-header">
+        <h1>Список бажань</h1>
+    </header>
 
-        <!-- Секція 2: Список збережених бажань -->
-         <section>
-            <h2>Мої бажання</h2>
+    <!-- Загальний контейнер макета для адаптивності (Grid/Flexbox) -->
+    <div class="app-layout">
 
-            <article>
-                <h3>Бездротові навушники</h3>
-                <p>Ціна: 2500 грн</p>
-                <p>Пріоритет: Високий</p>
-            </article>
+        <!-- Основна частина сторінки -->
+        <main>
+            <!-- Секція 1: Форма додавання -->
+            <section class="form-section">
+                <h2>Додати бажання</h2>
+                <form action="#" method="post">
+                    <div class="form-group">
+                        <label for="wish-title">Назва бажання</label>
+                        <input type="text" id="wish-title" name="title" required placeholder="Наприклад: Навушники">
+                    </div>
+                    <div class="form-group">
+                        <label for="wish-price">Ціна (грн)</label>
+                        <input type="number" id="wish-price" name="price" required placeholder="1500">
+                    </div>
+                    <div class="form-group">
+                        <label for="wish-priority">Пріоритет:</label>
+                        <select id="wish-priority" name="priority">
+                            <option value="high">Високий</option>
+                            <option value="medium" selected>Середній</option>
+                            <option value="low">Низький</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-submit">Додати у список</button>
+                </form>
+            </section>
 
-            <article>
-                <h3>Механічна клавіатура</h3>
-                <p>Ціна 3800 грн</p>
-                <p>Пріоритет: Середній</p>
-            </article>
+            <!-- Секція 2: Список збережених бажань -->
+            <section class="wishes-section">
+                <h2>Мої бажання</h2>
 
-            <article>
-                <h3>Настільна лампа</h3>
-                <p>Ціна: 900 грн</p>
-                <p>Пріоритет: Низький</p>
-            </article>
-         </section>
-</main>
-    
-       <!-- Блок з другорядним вмістом -->
-        <aside>
+                <!-- Контейнер для сітки карток (Grid) -->
+                <div class="wishlist-grid">
+                    <article class="wish-card">
+                        <h3>Бездротові навушники</h3>
+                        <p class="wish-price">Ціна: 2500 грн</p>
+                        <p class="wish-priority">Пріоритет: Високий</p>
+                    </article>
+
+                    <article class="wish-card">
+                        <h3>Механічна клавіатура</h3>
+                        <p class="wish-price">Ціна: 3800 грн</p>
+                        <p class="wish-priority">Пріоритет: Середній</p>
+                    </article>
+
+                    <article class="wish-card">
+                        <h3>Настільна лампа</h3>
+                        <p class="wish-price">Ціна: 900 грн</p>
+                        <p class="wish-priority">Пріоритет: Низький</p>
+                    </article>
+                </div>
+            </section>
+        </main>
+
+        <!-- Блок з другорядним вмістом (підсумкова сума) -->
+        <aside class="summary-aside">
             <h2>Підсумок</h2>
-            <p>Загальна вартість бажання: <strong>7200 грн</strong></p>
+            <p>Загальна вартість бажань: <strong>7200 грн</strong></p>
         </aside>
 
-        <!-- Підвал сторінки -->
-     <footer>
+    </div> <!-- Кінець app-layout -->
+
+    <!-- Підвал сторінки -->
+    <footer class="site-footer">
         <p>&copy; 2026 Список бажань. Автор: Кльован Роман. Навчальний проєкт КПІ (ФІОТ)</p>
-     </footer>
+    </footer>
+
     <script src="js/app.js"></script>
-          
-    </body>
+    
+</body>
 </html>
