@@ -14,7 +14,7 @@
         <h1>Список бажань</h1>
     </header>
 
-    <!-- Загальний контейнер макета для адаптивності (Grid/Flexbox) -->
+    <!-- Загальний контейнер макета для адаптивності -->
     <div class="app-layout">
 
         <!-- Основна частина сторінки -->
@@ -47,43 +47,30 @@
             <section class="wishes-section">
                 <h2>Мої бажання</h2>
 
-                <!-- Контейнер для сітки карток (Grid) -->
-                <div class="wishlist-grid">
-                    <article class="wish-card">
+                <!-- Динамічний контейнер з id="wishlist" (Крок 1) -->
+                <div id="wishlist" class="wishlist-grid">
+                    <!-- Статичні картки видаляються динамічно через JS -->
+                    <article class="wish-card static-placeholder">
                         <h3>Бездротові навушники</h3>
                         <p class="wish-price">2500 грн</p>
                         <span class="wish-priority priority-high">Пріоритет: Високий</span>
-                    </article>
-
-                    <article class="wish-card">
-                        <h3>Механічна клавіатура</h3>
-                        <p class="wish-price">3800 грн</p>
-                        <span class="wish-priority priority-medium">Пріоритет: Середній</span>
-                    </article>
-
-                    <article class="wish-card">
-                        <h3>Настільна лампа</h3>
-                        <p class="wish-price">900 грн</p>
-                        <span class="wish-priority priority-low">Пріоритет: Низький</span>
                     </article>
                 </div>
             </section>
         </main>
 
-        <!-- Блок з другорядним вмістом (підсумкова сума) -->
+        <!-- Блок підсумку з id="total-price-container" (Крок 9) -->
         <aside class="summary-aside">
             <h2>Підсумок</h2>
-            <p>Загальна вартість бажань: <strong>7200 грн</strong></p>
+            <p>Загальна вартість бажань: <strong id="total-price">0 грн</strong></p>
         </aside>
 
-    </div> <!-- Кінець app-layout -->
+    </div>
 
     <!-- Підвал сторінки -->
     <footer class="site-footer">
         <p>&copy; 2026 Список бажань. Автор: Кльован Роман. Навчальний проєкт КПІ (ФІОТ)</p>
     </footer>
 
-    
-    
 </body>
 </html>

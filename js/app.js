@@ -1,7 +1,5 @@
-// Перевірка підключення файлу
-console.log('script.js підключено успішно!');
 
-// 1. Масив об'єктів бажань
+// 1. Масив даних бажань з Практичної роботи №6
 const wishes = [
   { title: 'Бездротові навушники', price: 2500, priority: 'високий' },
   { title: 'Механічна клавіатура', price: 3800, priority: 'середній' },
@@ -9,41 +7,81 @@ const wishes = [
   { title: 'Ігровий монітор', price: 8500, priority: 'високий' }
 ];
 
-console.log('--- Список усіх бажань ---');
-console.log(wishes);
+// 2. Вибір елементів DOM (Крок 3)
+const wishlistContainer = document.querySelector('#wishlist');
+const totalPriceElement = document.querySelector('#total-price');
 
-// 2. Підрахунок загальної вартості циклом for...of
-function calculateTotalPrice(wishList) {
-  let totalPrice = 0;
-  for (const wish of wishList) {
-    totalPrice += wish.price;
-  }
-  return totalPrice;
+// 3. Демонстрація динамічного видалення статичної заглушки (Крок 2)
+const staticPlaceholder = document.querySelector('.static-placeholder');
+if (staticPlaceholder) {
+  staticPlaceholder.remove();
 }
 
-const totalSum = calculateTotalPrice(wishes);
-console.log(`Загальна вартість усіх бажань: ${totalSum} грн`);
+/**
+ * Функція підрахунку та оновлення підсумкової суми (Крок 9)
+ * @param {Array} items - масив бажань
+ */
+function updateSummaryTotal(items) {
+  let totalSum = 0;
+  for (const item of items) {
+    totalSum += item.price;
+  }
+  if (totalPriceElement) {
+    totalPriceElement.textContent = `${totalSum} грн`;
+  }
+}
 
-// 3. Умовна класифікація (знаходимо високий пріоритет)
-function showHighPriorityWishes(wishList) {
-  console.log('--- Бажання з ВИСОКИМ пріоритетом ---');
-  for (const wish of wishList) {
+/**
+ * Функція рендеру списку бажань у DOM (Кроки 4-8)
+ * @param {Array} items - масив бажань для відображення
+ */
+function renderWishlist(items) {
+  // Очищаємо вміст контейнера перед рендером
+  wishlistContainer.innerHTML = '';
+
+  // Перебираємо масив за допомогою forEach
+  items.forEach(wish => {
+    // Створюємо елемент картки <article> (Крок 5)
+    const card = document.createElement('article');
+    card.classList.add('wish-card');
+
+    // Установка dataset атрибута data-priority (Крок 6)
+    card.dataset.priority = wish.priority;
+
+    // Створюємо заголовок <h3> для назви
+    const title = document.createElement('h3');
+    title.textContent = wish.title;
+
+    // Створюємо параграф <p> для ціни
+    const price = document.createElement('p');
+    price.classList.add('wish-price');
+    price.textContent = `${wish.price} грн`;
+
+    // Створюємо бейдж <span> для пріоритету
+    const priority = document.createElement('span');
+    priority.classList.add('wish-priority');
+    priority.textContent = `Пріоритет: ${wish.priority}`;
+
+    // Додавання класів залежно від умов (Крок 6)
     if (wish.priority.toLowerCase() === 'високий') {
-      console.log(`[ВАЖЛИВО] ${wish.title} — ${wish.price} грн`);
+      card.classList.add('priority-high');
+      priority.classList.add('priority-high');
+    } else if (wish.priority.toLowerCase() === 'середній') {
+      priority.classList.add('priority-medium');
+    } else {
+      priority.classList.add('priority-low');
     }
-  }
+
+    // Додаємо вкладені елементи в картку
+    card.append(title, price, priority);
+
+    // Додаємо готову картку в контейнер списку (Крок 7)
+    wishlistContainer.append(card);
+  });
+
+  // Оновлюємо підсумкову суму (Крок 9)
+  updateSummaryTotal(items);
 }
 
-showHighPriorityWishes(wishes);
-
-// 4. Стрілкова функція перевірки бюджету
-const withinBudget = (price, budget) => price <= budget;
-
-const userBudget = 3000;
-console.log(`--- Перевірка доступності для бюджету ${userBudget} грн ---`);
-
-for (const wish of wishes) {
-  const isAffordable = withinBudget(wish.price, userBudget);
-  const status = isAffordable ? 'Доступно для купівлі' : 'Перевищує бюджет';
-  console.log(`${wish.title} (${wish.price} грн) -> ${status}`);
-}
+// 4. Первинний виклик функції рендеру при завантаженні сторінки (Крок 8)
+renderWishlist(wishes);
