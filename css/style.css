@@ -41,7 +41,7 @@ img {
   text-align: center;
   padding: 20px;
   font-size: 0.85rem;
-  color: #594e49; /* Покращено контраст для читабельності text/background */
+  color: #594e49;
   background-color: #eee5de;
 }
 
@@ -72,7 +72,7 @@ section {
 
 section h2 {
   margin-top: 0;
-  color: #b54f40; /* Темно-акцентний колір для високого контрасту з білим фоном (~4.8:1) */
+  color: #b54f40;
   font-size: 1.5rem;
   border-bottom: 2px solid #faf6f0;
   padding-bottom: 8px;
@@ -112,17 +112,12 @@ select:focus {
 /* 
    ==========================================================================
    НЕЧІТКА ВИМОГА ВАРІАНТА 7: «Має бути приємно додавати нові бажання»
-   Обґрунтування рішення:
-   Для кнопки додавання застосовано виразний теплий акцентний колір (#b54f40)
-   з підтвердженим контрастом білого тексту (WCAG AA). Додано мікроінтерактивний
-   hover-стан із легким підйомом (translateY) та м'якою тінню, що дає користувачу
-   приємний зворотний зв'язок при взаємодії та мотивує додавати нові товари.
    ========================================================================== 
 */
 .btn-submit {
   width: 100%;
   background-color: #b54f40;
-  color: #ffffff; /* Контраст 4.8:1 */
+  color: #ffffff;
   padding: 12px 20px;
   font-size: 1.05rem;
   font-weight: 600;
@@ -171,26 +166,22 @@ select:focus {
   margin: 0;
   color: #2c2523;
   font-size: 1.1rem;
-  font-weight: 500; /* Назва товару зроблена звичайною/середньою товщиною */
+  font-weight: 500;
 }
 
 /* 
    ==========================================================================
    ЧІТКА ВИМОГА ВАРІАНТА 7: «Ціна товару жирнішим і більшим шрифтом, ніж назва товару»
-   Реалізація:
-   .wish-card h3 має font-size: 1.1rem і font-weight: 500.
-   .wish-price має font-size: 1.35rem і font-weight: 700 (жирний шрифт),
-   що чітко виконує технічне завдання та виділяє ціну як головний атрибут бажання.
    ========================================================================== 
 */
 .wish-price {
   margin: 0;
   color: #b54f40;
-  font-size: 1.35rem; /* Більший шрифт за назву */
-  font-weight: 700;    /* Жирніший шрифт за назву */
+  font-size: 1.35rem;
+  font-weight: 700;
 }
 
-/* Позначення пріоритету (Деталь дизайну) */
+/* Позначення пріоритету (статичні бейджі) */
 .wish-priority {
   margin: 0;
   font-size: 0.85rem;
@@ -217,7 +208,37 @@ select:focus {
   color: #2d6a4f;
 }
 
-/* Мобільний aside (Деталь дизайну: виділена сума) */
+/* ==========================================
+   Стилі для селекта зміни пріоритету всередині картки (Лаб 8)
+   ========================================== */
+.card-priority-select {
+  width: auto;
+  padding: 4px 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.card-priority-select.priority-high {
+  background-color: #fde8e5;
+  color: #b54f40;
+}
+
+.card-priority-select.priority-medium {
+  background-color: #fef3e2;
+  color: #b26a00;
+}
+
+.card-priority-select.priority-low {
+  background-color: #eaf4ed;
+  color: #2d6a4f;
+}
+
+/* Мобільний aside (виділена сума) */
 .summary-aside {
   background-color: #f7ebe6;
   border: 1px solid #ebdcd5;

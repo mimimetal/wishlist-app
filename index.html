@@ -9,34 +9,30 @@
 </head>
 <body>
 
-    <!-- Шапка з назвою -->
     <header class="site-header">
         <h1>Список бажань</h1>
     </header>
 
-    <!-- Загальний контейнер макета для адаптивності -->
     <div class="app-layout">
-
-        <!-- Основна частина сторінки -->
         <main>
-            <!-- Секція 1: Форма додавання -->
+            <!-- Секція 1: Форма додавання (Крок 1) -->
             <section class="form-section">
                 <h2>Додати бажання</h2>
-                <form action="#" method="post">
+                <form id="wish-form">
                     <div class="form-group">
                         <label for="wish-title">Назва бажання</label>
                         <input type="text" id="wish-title" name="title" required placeholder="Наприклад: Навушники">
                     </div>
                     <div class="form-group">
                         <label for="wish-price">Ціна (грн)</label>
-                        <input type="number" id="wish-price" name="price" required placeholder="1500">
+                        <input type="number" id="wish-price" name="price" required min="0" placeholder="1500">
                     </div>
                     <div class="form-group">
                         <label for="wish-priority">Пріоритет:</label>
                         <select id="wish-priority" name="priority">
-                            <option value="high">Високий</option>
-                            <option value="medium" selected>Середній</option>
-                            <option value="low">Низький</option>
+                            <option value="високий">Високий</option>
+                            <option value="середній" selected>Середній</option>
+                            <option value="низький">Низький</option>
                         </select>
                     </div>
                     <button type="submit" class="btn-submit">Додати у список</button>
@@ -46,28 +42,17 @@
             <!-- Секція 2: Список збережених бажань -->
             <section class="wishes-section">
                 <h2>Мої бажання</h2>
-
-                <!-- Динамічний контейнер з id="wishlist" (Крок 1) -->
-                <div id="wishlist" class="wishlist-grid">
-                    <!-- Статичні картки видаляються динамічно через JS -->
-                    <article class="wish-card static-placeholder">
-                        <h3>Бездротові навушники</h3>
-                        <p class="wish-price">2500 грн</p>
-                        <span class="wish-priority priority-high">Пріоритет: Високий</span>
-                    </article>
-                </div>
+                <div id="wishlist" class="wishlist-grid"></div>
             </section>
         </main>
 
-        <!-- Блок підсумку з id="total-price-container" (Крок 9) -->
+        <!-- Блок підсумку -->
         <aside class="summary-aside">
             <h2>Підсумок</h2>
             <p>Загальна вартість бажань: <strong id="total-price">0 грн</strong></p>
         </aside>
-
     </div>
 
-    <!-- Підвал сторінки -->
     <footer class="site-footer">
         <p>&copy; 2026 Список бажань. Автор: Кльован Роман. Навчальний проєкт КПІ (ФІОТ)</p>
     </footer>
