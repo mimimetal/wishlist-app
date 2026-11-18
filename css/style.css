@@ -45,9 +45,7 @@ img {
   background-color: #eee5de;
 }
 
-/* ==========================================
-   3. Базовий (Мобільний) Макет — Mobile First (<600px)
-   ========================================== */
+
 .app-layout {
   max-width: 1100px;
   margin: 0 auto;
@@ -109,11 +107,7 @@ select:focus {
   box-shadow: 0 0 0 3px rgba(200, 109, 94, 0.25);
 }
 
-/* 
-   ==========================================================================
-   НЕЧІТКА ВИМОГА ВАРІАНТА 7: «Має бути приємно додавати нові бажання»
-   ========================================================================== 
-*/
+
 .btn-submit {
   width: 100%;
   background-color: #b54f40;
@@ -169,11 +163,7 @@ select:focus {
   font-weight: 500;
 }
 
-/* 
-   ==========================================================================
-   ЧІТКА ВИМОГА ВАРІАНТА 7: «Ціна товару жирнішим і більшим шрифтом, ніж назва товару»
-   ========================================================================== 
-*/
+
 .wish-price {
   margin: 0;
   color: #b54f40;
@@ -208,9 +198,7 @@ select:focus {
   color: #2d6a4f;
 }
 
-/* ==========================================
-   Стилі для селекта зміни пріоритету всередині картки (Лаб 8)
-   ========================================== */
+
 .card-priority-select {
   width: auto;
   padding: 4px 10px;
@@ -236,6 +224,91 @@ select:focus {
 .card-priority-select.priority-low {
   background-color: #eaf4ed;
   color: #2d6a4f;
+}
+
+
+.section-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  border-bottom: 2px solid #faf6f0;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+}
+
+.section-header-row h2 {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.btn-reload {
+  background-color: #f7ebe6;
+  color: #b54f40;
+  border: 1px solid #e8a598;
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-reload:hover:not(:disabled) {
+  background-color: #b54f40;
+  color: #ffffff;
+}
+
+.btn-reload:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Блок повідомлень про стан завантаження / помилки */
+.status-message {
+  margin-bottom: 16px;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.status-loading {
+  color: #b26a00;
+  background-color: #fef3e2;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border-left: 4px solid #b26a00;
+}
+
+.status-error {
+  color: #b54f40;
+  background-color: #fde8e5;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border-left: 4px solid #b54f40;
+}
+
+/* Стиль для вже придбаних товарів із API (completed: true) */
+.wish-card.is-purchased {
+  opacity: 0.78;
+  background-color: #f4f7f5;
+  border-color: #cde0d5;
+}
+
+.wish-card.is-purchased h3 {
+  text-decoration: line-through;
+  color: #594e49;
+}
+
+.purchased-badge {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #2d6a4f;
+  background-color: #eaf4ed;
+  padding: 2px 8px;
+  border-radius: 6px;
+  align-self: flex-start;
 }
 
 /* Мобільний aside (виділена сума) */

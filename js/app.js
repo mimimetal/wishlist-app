@@ -1,20 +1,45 @@
+// ==========================================
+// Практична робота №9: Клієнт для відомого API (fetch / async-await)
+// Варіант 7: Список бажань (wishlist)
+// ==========================================
 
+// Константа з URL публічного API (Крок 3)
+const API_URL = 'https://jsonplaceholder.typicode.com/todos?userId=2';
 
-// 1. Початковий масив бажань
-const wishes = [
-  { id: 1, title: 'Бездротові навушники', price: 2500, priority: 'високий' },
-  { id: 2, title: 'Механічна клавіатура', price: 3800, priority: 'середній' },
-  { id: 3, title: 'Настільна лампа', price: 900, priority: 'низький' },
-  { id: 4, title: 'Ігровий монітор', price: 8500, priority: 'високий' }
-];
+// Масив бажань (буде заповнюватися даними з API та форми)
+let wishes = [];
 
-// 2. Вибір елементів DOM
+// Вибір елементів DOM
 const wishlistContainer = document.querySelector('#wishlist');
 const totalPriceElement = document.querySelector('#total-price');
 const wishForm = document.querySelector('#wish-form');
 const titleInput = document.querySelector('#wish-title');
 const priceInput = document.querySelector('#wish-price');
 const prioritySelect = document.querySelector('#wish-priority');
+const reloadBtn = document.querySelector('#reload-btn');
+const statusBox = document.querySelector('#api-status');
+
+/**
+ * Керування станом завантаження (Крок 7)
+ */
+function setLoadingState(isLoading) {
+  reloadBtn.disabled = isLoading;
+  if (isLoading) {
+    statusBox.className = 'status-message status-loading';
+    statusBox.textContent = '⏳ Завантаження списку бажань із сервера...';
+  } else if (statusBox.classList.contains('status-loading')) {
+    statusBox.className = 'status-message';
+    statusBox.textContent = '';
+  }
+}
+
+/**
+ * Відображення повідомлення про помилку користувачу (Крок 8)
+ */
+function showErrorMessage(message) {
+  statusBox.className = 'status-message status-error';
+  statusBox.textContent = `⚠️ ${message}`;
+}
 
 /**
  * Допоміжна функція для оновлення класу кольору пріоритету
@@ -42,7 +67,7 @@ function updateSummaryTotal(items) {
 }
 
 /**
- * Функція рендеру списку бажань у DOM
+ * Функція рендеру списку бажань у DOM (Крок 6)
  */
 function renderWishlist(items) {
   wishlistContainer.innerHTML = '';
@@ -56,6 +81,9 @@ function renderWishlist(items) {
     if (wish.priority === 'високий') {
       card.classList.add('priority-high');
     }
+    if (wish.completed) {
+      card.classList.add('is-purchased');
+    }
 
     const title = document.createElement('h3');
     title.textContent = wish.title;
@@ -64,7 +92,12 @@ function renderWishlist(items) {
     price.classList.add('wish-price');
     price.textContent = `${wish.price} грн`;
 
-    // Створюємо інтерактивний select для зміни пріоритету прямо в картці
+    // Статус з API (completed: true -> Вже придбано)
+    const statusBadge = document.createElement('span');
+    statusBadge.classList.add('purchased-badge');
+    statusBadge.textContent = wish.completed ? '✅ Вже придбано' : '🛒 У планах';
+
+    // Селект для зміни пріоритету
     const cardSelect = document.createElement('select');
     cardSelect.classList.add('card-priority-select');
     applyPriorityClass(cardSelect, wish.priority);
@@ -85,73 +118,109 @@ function renderWishlist(items) {
       cardSelect.append(optionEl);
     });
 
-    card.append(title, price, cardSelect);
+    card.append(title, price, statusBadge, cardSelect);
     wishlistContainer.append(card);
   });
 
   updateSummaryTotal(items);
 }
 
+/**
+ * Асинхронна функція завантаження даних із зовнішнього API
+ * Використовується API: https://jsonplaceholder.typicode.com/todos?userId=2 (Кроки 2-8, 11)
+ */
+async function loadWishesFromAPI() {
+  setLoadingState(true);
 
+  try {
+    // Виконуємо HTTP GET-запит через fetch
+    const response = await fetch(API_URL);
+
+    // Перевіряємо HTTP-статус (Крок 4)
+    if (!response.ok) {
+      throw new Error(`Помилка HTTP: сервер повернув статус ${response.status}`);
+    }
+
+    // Розбираємо JSON-відповідь (Крок 5)
+    const apiData = await response.json();
+    console.log('Отримані дані з JSONPlaceholder API:', apiData);
+
+    // Адаптуємо перші 6 записів під структуру нашого застосунку (Крок 6)
+    wishes = apiData.slice(0, 6).map((item, index) => ({
+      id: item.id,
+      title: item.title.charAt(0).toUpperCase() + item.title.slice(1), // З великої літери
+      price: (index + 1) * 650, // Генеруємо реалістичну ціну для підрахунку суми
+      priority: item.completed ? 'низький' : (index % 2 === 0 ? 'високий' : 'середній'),
+      completed: item.completed
+    }));
+
+    // Виводимо отриманий список у DOM
+    renderWishlist(wishes);
+
+  } catch (error) {
+    // Виводимо дружнє повідомлення згідно з Варіантом 7 (Крок 8)
+    showErrorMessage('Список бажань недоступний офлайн');
+    console.error('Деталі помилки завантаження API:', error);
+  } finally {
+    // Вимикаємо індикатор завантаження в будь-якому разі (Крок 7)
+    setLoadingState(false);
+  }
+}
+
+// ==========================================
+// Обробники подій (Форма, Валідація, Делегування, Кнопка оновлення)
+// ==========================================
+
+// Валідація ціни
 priceInput.addEventListener('input', () => {
   const val = Number(priceInput.value);
   if (priceInput.value !== '' && val < 0) {
     priceInput.setCustomValidity('Ціна товару не може бути від’ємною! Введіть число 0 або більше.');
   } else {
-    priceInput.setCustomValidity(''); // Повертаємо коректний стан
+    priceInput.setCustomValidity('');
   }
 });
 
-
+// Додавання нового бажання через форму
 wishForm.addEventListener('submit', event => {
-  // Скасовуємо стандартне перезавантаження сторінки (Крок 3)
   event.preventDefault();
 
-  // Зчитуємо значення полів (Крок 4)
-  const titleValue = titleInput.value.trim();
-  const priceValue = Number(priceInput.value);
-  const priorityValue = prioritySelect.value;
-
-  // Створюємо новий об'єкт і додаємо в масив (Крок 5)
   const newWish = {
     id: Date.now(),
-    title: titleValue,
-    price: priceValue,
-    priority: priorityValue
+    title: titleInput.value.trim(),
+    price: Number(priceInput.value),
+    priority: prioritySelect.value,
+    completed: false
   };
-  wishes.push(newWish);
 
-  // Перемальовуємо список і оновлюємо підсумок (Крок 6)
+  wishes.unshift(newWish); // Додаємо на початок списку
   renderWishlist(wishes);
-
-  // Очищуємо форму (Крок 7)
   wishForm.reset();
 });
 
-// ==========================================
-// 5. Друга подія варіанта: делегування події change (Крок 9)
-// Зміна пріоритету вже доданого елемента без повного перерендеру
-// ==========================================
+// Делегування події change для пріоритету
 wishlistContainer.addEventListener('change', event => {
-  // Перевіряємо, чи подія відбулася саме на селекті пріоритету в картці
   if (event.target.classList.contains('card-priority-select')) {
     const selectEl = event.target;
     const newPriority = selectEl.value;
     const cardEl = selectEl.closest('.wish-card');
     const wishId = Number(cardEl.dataset.id);
 
-    // Оновлюємо дані в масиві
     const targetWish = wishes.find(w => w.id === wishId);
     if (targetWish) {
       targetWish.priority = newPriority;
     }
 
-    // Оновлюємо атрибут та класи без перерендеру всього списку
     cardEl.dataset.priority = newPriority;
     cardEl.classList.toggle('priority-high', newPriority === 'високий');
     applyPriorityClass(selectEl, newPriority);
   }
 });
 
-// Первинний рендер при завантаженні сторінки
-renderWishlist(wishes);
+// Повторне завантаження за кліком на кнопку «Оновити з сервера» (Крок 10)
+reloadBtn.addEventListener('click', () => {
+  loadWishesFromAPI();
+});
+
+// Запускаємо завантаження даних при відкритті сторінки
+loadWishesFromAPI();

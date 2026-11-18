@@ -15,7 +15,7 @@
 
     <div class="app-layout">
         <main>
-            <!-- Секція 1: Форма додавання (Крок 1) -->
+            <!-- Секція 1: Форма додавання -->
             <section class="form-section">
                 <h2>Додати бажання</h2>
                 <form id="wish-form">
@@ -39,9 +39,18 @@
                 </form>
             </section>
 
-            <!-- Секція 2: Список збережених бажань -->
+            <!-- Секція 2: Список бажань (завантаження через API + локальні) -->
             <section class="wishes-section">
-                <h2>Мої бажання</h2>
+                <div class="section-header-row">
+                    <h2>Мої бажання</h2>
+                    <!-- Кнопка повторного запиту до API (Крок 10) -->
+                    <button type="button" id="reload-btn" class="btn-reload">🔄 Оновити з сервера</button>
+                </div>
+
+                <!-- Блок для індикації завантаження та помилок (Кроки 7-8) -->
+                <div id="api-status" class="status-message" aria-live="polite"></div>
+
+                <!-- Контейнер для карток -->
                 <div id="wishlist" class="wishlist-grid"></div>
             </section>
         </main>
