@@ -367,4 +367,29 @@ select:focus {
     position: sticky;
     top: 24px;
   }
+
+  .purchased-checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #2c2523;
+  margin-top: 4px;
+  user-select: none;
+}
+
+.purchased-checkbox-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #2d6a4f;
+  cursor: pointer;
+}
+
+.purchased-stats {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #594e49;
+}
 }

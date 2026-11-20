@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Список бажань</title>
+    <title>Список бажань (Vue 3)</title>
     <link rel="stylesheet" href="css/style.css">
+    <!-- Крок 2: Підключення Vue 3 через CDN без збірки -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="js/app.js" defer></script>
 </head>
 <body>
@@ -13,25 +15,26 @@
         <h1>Список бажань</h1>
     </header>
 
-    <div class="app-layout">
+    <!-- Кореневий контейнер застосунку Vue 3 -->
+    <div id="app" class="app-layout">
         <main>
-            <!-- Секція 1: Форма додавання -->
+            <!-- Секція 1: Форма додавання нового бажання через @submit.prevent -->
             <section class="form-section">
                 <h2>Додати бажання</h2>
-                <form id="wish-form">
+                <form @submit.prevent="addWish">
                     <div class="form-group">
                         <label for="wish-title">Назва бажання</label>
-                        <input type="text" id="wish-title" name="title" required placeholder="Наприклад: Навушники">
+                        <input type="text" id="wish-title" v-model.trim="newTitle" required placeholder="Наприклад: Бездротова мишка">
                     </div>
                     <div class="form-group">
                         <label for="wish-price">Ціна (грн)</label>
-                        <input type="number" id="wish-price" name="price" required min="0" placeholder="1500">
+                        <input type="number" id="wish-price" v-model.number="newPrice" required min="0" placeholder="1500">
                     </div>
                     <div class="form-group">
                         <label for="wish-priority">Пріоритет:</label>
-                        <select id="wish-priority" name="priority">
+                        <select id="wish-priority" v-model="newPriority">
                             <option value="високий">Високий</option>
-                            <option value="середній" selected>Середній</option>
+                            <option value="середній">Середній</option>
                             <option value="низький">Низький</option>
                         </select>
                     </div>
@@ -39,26 +42,44 @@
                 </form>
             </section>
 
-            <!-- Секція 2: Список бажань (завантаження через API + локальні) -->
+            <!-- Секція 2: Список збережених бажань (компонентний підхід) -->
             <section class="wishes-section">
                 <div class="section-header-row">
                     <h2>Мої бажання</h2>
-                    <!-- Кнопка повторного запиту до API (Крок 10) -->
-                    <button type="button" id="reload-btn" class="btn-reload">🔄 Оновити з сервера</button>
+                    <button type="button" class="btn-reload" :disabled="isLoading" @click="loadFromAPI">
+                        🔄 Оновити з сервера
+                    </button>
                 </div>
 
-                <!-- Блок для індикації завантаження та помилок (Кроки 7-8) -->
-                <div id="api-status" class="status-message" aria-live="polite"></div>
+                <!-- Індикація стану завантаження або помилки API -->
+                <div v-if="isLoading" class="status-message status-loading">
+                    ⏳ Завантаження списку бажань із сервера...
+                </div>
+                <div v-else-if="errorMessage" class="status-message status-error">
+                    ⚠️ {{ errorMessage }}
+                </div>
 
-                <!-- Контейнер для карток -->
-                <div id="wishlist" class="wishlist-grid"></div>
+                <!-- Крок 5: Декларативний рендер циклом v-for з :key="wish.id" -->
+                <div id="wishlist" class="wishlist-grid">
+                    <wish-item
+                        v-for="wish in wishes"
+                        :key="wish.id"
+                        :id="wish.id"
+                        :name="wish.name"
+                        :price="wish.price"
+                        :priority="wish.priority"
+                        :purchased="wish.purchased"
+                        @toggle="toggleWish"
+                    ></wish-item>
+                </div>
             </section>
         </main>
 
-        <!-- Блок підсумку -->
+        <!-- Блок підсумку з автоматичним перерахунком через computed -->
         <aside class="summary-aside">
             <h2>Підсумок</h2>
-            <p>Загальна вартість бажань: <strong id="total-price">0 грн</strong></p>
+            <p>Загальна вартість бажань: <strong>{{ totalPrice }} грн</strong></p>
+            <p class="purchased-stats">Придбано: {{ purchasedCount }} з {{ wishes.length }}</p>
         </aside>
     </div>
 
